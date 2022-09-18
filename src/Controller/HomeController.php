@@ -10,10 +10,6 @@ class HomeController extends AbstractController{
 
     #[Route('/', name:'home_controller')]
     public function home():Response{
-
-        $name = 'Rakel';
-        return $this->render('home.html.twig', [
-            'name' => $name
-        ]);
+        return $this->render('home.html.twig', []);
     }
 }
