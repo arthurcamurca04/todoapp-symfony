@@ -1,7 +1,52 @@
 {% extends "base.html.twig" %}
 
-{% block welcome%}
-<h1>
-    Welcome, {{name}}.
-</h1>
+{% block body%}
+<nav class="container-fluid">
+    <a class="brand" href="/"><i class="fa-solid fa-pen"></i> ToDo App</a>
+    <a class="btn btn-add-todo" href="/todo/add">Add ToDo</a>
+</nav>
+
+<main>
+    <h1>To Do List</h1>
+
+    <div class="container-todos">
+        <ol class="todos">
+            <li class="todo">1. Fazer compras
+                <span>
+                    <a href="/todo/edit" class="btn-edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    
+                    <button class="btn btn-trash">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </span>
+            </li>
+
+            <li class="todo">2. Lavar o carro
+                <span>
+                    <a href="/todo/edit" class="btn-edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    
+                    <button class="btn btn-trash">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </span>
+            </li>
+
+            <li class="todo">3. Estudar programação
+                <span>
+                    <a href="/todo/edit" class="btn-edit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    
+                    <button class="btn btn-trash">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </span>
+            </li>
+        </ol>
+    </div>
+</main>
 {% endblock %}
