@@ -7,41 +7,26 @@
 
     <div class="container-todos">
         <ol class="todos">
-            <li class="todo">1. Fazer compras
-                <span>
-                    <a href={{absolute_url('/todo/edit/1')}} class="btn-edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    
-                    <button class="btn btn-trash">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </span>
+            {% for todo in todos %}
+                
+                <li class="todo">
+                    <span>
+                        <form style="display: inline-block;" action="" method="POST">
+                            <input style="cursor: pointer;" type="checkbox" {% if todo['isDone'] %} checked {% endif %}>
+                        </form> 
+                        {{ todo['name'] }}
+                    </span>
+                    <span>
+                        <a href={{path('todo_edit_page', {id: todo['id']})}} class="btn-edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        
+                        <button class="btn btn-trash">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </span>
             </li>
-
-            <li class="todo">2. Lavar o carro
-                <span>
-                    <a href={{absolute_url('/todo/edit/2')}} class="btn-edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    
-                    <button class="btn btn-trash">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </span>
-            </li>
-
-            <li class="todo">3. Estudar programação
-                <span>
-                    <a href={{absolute_url('/todo/edit/3')}} class="btn-edit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    
-                    <button class="btn btn-trash">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </span>
-            </li>
+            {% endfor %}
         </ol>
     </div>
 </main>

@@ -1,6 +1,11 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Add | {{parent()}}{% endblock %}
 {% block body %}
     {% include "nav.html.twig" %}
-    <h1>add-todo</h1>
+    <main>
+        <h1>{{ 'Add new ToDo' }}</h1>
+        <div class="container-form">
+        </div>
+    </main>
 {% endblock %}
