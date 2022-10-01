@@ -31,7 +31,13 @@ class ToDoController extends AbstractController{
             ])
             ->add('save', SubmitType::class, ['label'=>'Add'])
             ->getForm();
-        dd($request->request);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $todo = $form->getData();
+            return $this->redirectToRoute('home_page');
+        }
+        
         return $this->renderForm('add-todo.html.twig', [
             'form' => $form
         ]);
