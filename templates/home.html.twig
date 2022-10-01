@@ -12,7 +12,7 @@
                         <form style="display: inline-block;" action="" method="POST">
                             <input style="cursor: pointer;" type="checkbox" {% if todo['isDone'] %} checked {% endif %}>
                         </form> 
-                        {{ todo['name'] }}
+                        {{ todo['description'] }}
                     </span>
                     <span>
                         <a href={{path('todo_edit_page', {id: todo['id']})}} class="btn-edit">
