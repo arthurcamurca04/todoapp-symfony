@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ToDo;
 use Psr\Log\LoggerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ToDoController extends AbstractController{
 
     #[Route('/todo/add', name:'todo_add_page', methods: ['GET', 'POST'])]
-    public function addToDo(Request $request):Response{
+    public function addToDo(Request $request, ManagerRegistry $doctrine):Response{
 
         $todo = new ToDo(1,'Write a blog post', false);
 
@@ -34,7 +35,15 @@ class ToDoController extends AbstractController{
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $todo = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+
+            $data = $form->getData();
+            $newTodo = new ToDo($data->getId(),$data->getDescription(), $data->getIsDone());
+            $entityManager->persist($newTodo);
+
+            $entityManager->flush();
+
             return $this->redirectToRoute('home_page');
         }
         

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -16,17 +17,18 @@ class ToDo
     #[Id]
     #[GeneratedValue(strategy: 'AUTO')]
     #[Column]
-    private $id;
+    private int $id;
 
-    #[Column]
+    #[Column(type: Types::TEXT, length: 100, nullable: false)]
     #[NotBlank]
-    private $description;
+    private string $description;
 
-    #[Column]
-    private $isDone;
+    #[Column(type: Types::BOOLEAN, nullable: false)]
+    private bool $isDone;
 
     /**
-     * @param $name
+     * @param $id
+     * @param $description
      * @param $isDone
      */
     public function __construct($id, $description, $isDone)
@@ -36,9 +38,8 @@ class ToDo
         $this->isDone = $isDone;
     }
 
-
     /**
-     * @return mixed
+     * @return int
      */
     public function getId(): int
     {
@@ -46,7 +47,7 @@ class ToDo
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDescription(): string
     {
@@ -54,7 +55,7 @@ class ToDo
     }
 
     /**
-     * @param mixed $name
+     * @param string $description
      */
     public function setDescription(string $description): void
     {
@@ -62,7 +63,7 @@ class ToDo
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getIsDone(): bool
     {
@@ -70,7 +71,7 @@ class ToDo
     }
 
     /**
-     * @param mixed $isDone
+     * @param bool $isDone
      */
     public function setIsDone(bool $isDone): void
     {
