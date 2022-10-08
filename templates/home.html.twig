@@ -5,8 +5,10 @@
     <h1>To Do List</h1>
     <div class="container-todos">
         <ol class="todos">
+            {% if todos is empty %}
+                <p style="text-align: center; margin-top: 44px;">There is nothing to do! :(</p>
+            {% endif %}
             {% for todo in todos %}
-                
                 <li class="todo">
                     <span>
                         <form style="display: inline-block;" action="" method="POST">
@@ -18,12 +20,12 @@
                         <a href={{path('todo_edit_page', {id: todo.id})}} class="btn-edit">
                             <i class="fas fa-pen-to-square"></i>
                         </a>
-                        
-                        <button class="btn btn-trash">
-                            <i class="fas fa-trash"></i>
-                        </button>
+
+                        <a class="btn btn-trash" href={{path('todo_remove_page', {id: todo.id})}}>
+                           <i class="fas fa-trash"></i>
+                        </a>
                     </span>
-            </li>
+                </li>
             {% endfor %}
         </ol>
     </div>

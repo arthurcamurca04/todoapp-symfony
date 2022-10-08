@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ToDo;
+use App\Repository\TodoRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +21,12 @@ class HomeController extends AbstractController{
      * @throws LoaderError
      */
     #[Route('/', name:'home_page')]
-    public function home(Environment $twig, ManagerRegistry $doctrine):Response{
+    public function home(Environment $twig, TodoRepository $todoRepository):Response{
 
-        $todos = $doctrine->getRepository(ToDo::class)->findAll();
+        //$todos = $doctrine->getRepository(ToDo::class)->findAll();
+        $todos = $todoRepository->findAll();
         if(empty($todos)){
-            throw $this->createNotFoundException('No to dos found');
+            $todos = [];
         }
 
         $html = $twig->render('home.html.twig', [
