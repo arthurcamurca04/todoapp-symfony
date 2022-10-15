@@ -12,9 +12,14 @@
                 <li class="todo">
                     <span>
                         <form style="display: inline-block;" action="" method="POST">
-                            <input style="cursor: pointer;" type="checkbox" {% if todo.isDone %} checked {% endif %}>
+                            {% if todo.isDone %}
+                                <i style="color: chartreuse" class="fa-solid fa-check"></i>
+                            {% else %}
+                                <i style="color: red" class="fa-solid fa-x"></i>
+                            {% endif %}
+
                         </form> 
-                        {{ todo.description }}
+                        <p style="display: inline; {% if todo.isDone %} text-decoration: line-through; {% endif %}">{{ todo.description }}</p>
                     </span>
                     <span>
                         <a href={{path('todo_edit_page', {id: todo.id})}} class="btn-edit">

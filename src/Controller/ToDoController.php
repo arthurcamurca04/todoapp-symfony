@@ -6,12 +6,10 @@ use App\Entity\ToDo;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +37,7 @@ class ToDoController extends AbstractController{
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            $newTodo = new ToDo($data->getId(),$data->getDescription(), $data->getIsDone());
+            $newTodo = new ToDo($data->getId(), $data->getDescription(), $data->getIsDone());
             $todoRepository->save($newTodo, true);
 
             return $this->redirectToRoute('home_page');
@@ -67,7 +65,7 @@ class ToDoController extends AbstractController{
                 ],
                 'label' => 'Is it done? '
             ])
-            ->add('save', SubmitType::class, ['label'=>'Add'])
+            ->add('save', SubmitType::class, ['label'=>'Edit'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -75,7 +73,7 @@ class ToDoController extends AbstractController{
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            $newTodo = new ToDo($data->getId(),$data->getDescription(), $data->getIsDone());
+            $newTodo = new ToDo($foundedToDo->getId(),$data->getDescription(), $data->getIsDone());
             $todoRepository->update($newTodo, true);
 
             return $this->redirectToRoute('home_page');
@@ -86,13 +84,15 @@ class ToDoController extends AbstractController{
         ]);
     }
 
+    /** @noinspection PhpUnused */
     #[Route('/todo/remove/{id}', name: 'todo_remove_page')]
-    public function removeToDo(Request $request, TodoRepository $todoRepository, string $id=null): Response {
+    public function removeToDo(TodoRepository $todoRepository, string $id=null): Response {
         $todo = $todoRepository->findOneBy(['id'=>$id]);
         $todoRepository->remove($todo, true);
         return $this->redirect('/', Response::HTTP_MOVED_PERMANENTLY);
     }
 
+    /** @noinspection PhpUnused */
     #[Route('/api/todo/{id<\d+>}', methods:['GET'])]
     public function getToDo(int $id, LoggerInterface $logger): Response {
         $todo = [
